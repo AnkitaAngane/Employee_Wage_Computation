@@ -11,6 +11,7 @@ echo "WELCOME to Employee Wage Computaion Program!"
 #UC2:Calculating Daily Employee Wage
 #UC3:Added part time employee wage
 
+
 #Variables declaration
 empAbsent=0
 empRatePerHr=20
@@ -20,19 +21,22 @@ empHr=0
 
 ranCheck=$((RANDOM%3))
 
-if [ $empAbsent -eq $ranCheck ]
-then
-        echo "Employee is absent"
-	empHr=0
-else
-        echo "Employee is present"
-	if [ $fullTime -eq $ranCheck ]
-	then
-		empHr=8
-	else
+#UC4:Removed if-else condition and added case loop
+
+case $ranCheck in
+        $partTime)
+                echo "Employee is present"
 		empHr=4
-	fi
-fi
+                ;;
+        $fullTime)
+		echo "Employee is present"
+                empHr=8
+                ;;
+        *)
+		echo "Employee is absent"
+                empHr=0
+                ;;
+esac
 
 salary=$(( empHr * empRatePerHr ))
 echo "Salary of employee is $salary"
