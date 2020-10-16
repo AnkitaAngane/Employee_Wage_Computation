@@ -18,6 +18,7 @@ empRatePerHr=20
 partTime=1
 fullTime=2
 empHr=0
+empHr2=0
 totalEmpHr=0
 noWorkingDays=20
 totSalary=0
@@ -32,12 +33,9 @@ totalDays=0
 #UC6:Adding condition for total working Hr
 
 
-while [ $empHr -lt $maxHr -a $totalDays -lt $noWorkingDays ]
-do
-	totalDays=$(( totalDays + 1 ))
-	ranCheck=$((RANDOM%3))
+function getWorkingHr() {
 
-	case $ranCheck in
+	case $1 in
         	$partTime)
                 	partTimePre=$(( partTimePre + 1 ))
 			empHr=4
@@ -51,8 +49,17 @@ do
                 	empHr=0
                 	;;
 	esac
-	totalEmpHr=$(( totalEmpHr + empHr ))
+	return $empHr
 
+}
+
+while [ $totalEmpHr -lt $maxHr -a $totalDays -lt $noWorkingDays ]
+do
+
+	totalDays=$(( totalDays + 1 ))
+	getWorkingHr $((RANDOM%3))
+	empHr2=`echo $?`
+	totalEmpHr=$(( totalEmpHr + empHr2 ))
 done
 
 totSalary=$(( totalEmpHr * empRatePerHr ))
