@@ -18,26 +18,38 @@ empRatePerHr=20
 partTime=1
 fullTime=2
 empHr=0
-
-ranCheck=$((RANDOM%3))
+noWorkingDays=20
+totSalary=0
+fullTimePre=0
+partTimePre=0
+absent=0
 
 #UC4:Removed if-else condition and added case loop
+#UC5:Calculating wage for a month
 
-case $ranCheck in
-        $partTime)
-                echo "Employee is present"
-		empHr=4
-                ;;
-        $fullTime)
-		echo "Employee is present"
-                empHr=8
-                ;;
-        *)
-		echo "Employee is absent"
-                empHr=0
-                ;;
-esac
+for (( day=1; day<=$noWorkingDays; day++ ))
+do
+	ranCheck=$((RANDOM%3))
 
-salary=$(( empHr * empRatePerHr ))
-echo "Salary of employee is $salary"
+	case $ranCheck in
+        	$partTime)
+                	partTimePre=$(( partTimePre + 1 ))
+			empHr=4
+                	;;
+        	$fullTime)
+			fullTimePre=$(( fullTimePre + 1 ))
+                	empHr=8
+                	;;
+        	*)
+			absent=$(( absent + 1 ))
+                	empHr=0
+                	;;
+	esac
 
+	salary=$(( empHr * empRatePerHr ))
+	totSalary=$(( salary + totSalary ))
+done
+
+echo "EMPLOYEE DATA ::"
+echo "FullTimePresent days : $fullTimePre  PartTimePresent days : $partTimePre  Absent days : $absent "
+echo "Total Salary for 20 days is $totSalary"
