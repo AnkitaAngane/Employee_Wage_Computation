@@ -18,17 +18,23 @@ empRatePerHr=20
 partTime=1
 fullTime=2
 empHr=0
+totalEmpHr=0
 noWorkingDays=20
 totSalary=0
 fullTimePre=0
 partTimePre=0
 absent=0
+maxHr=100
+totalDays=0
 
 #UC4:Removed if-else condition and added case loop
 #UC5:Calculating wage for a month
+#UC6:Adding condition for total working Hr
 
-for (( day=1; day<=$noWorkingDays; day++ ))
+
+while [ $empHr -lt $maxHr -a $totalDays -lt $noWorkingDays ]
 do
+	totalDays=$(( totalDays + 1 ))
 	ranCheck=$((RANDOM%3))
 
 	case $ranCheck in
@@ -45,11 +51,13 @@ do
                 	empHr=0
                 	;;
 	esac
+	totalEmpHr=$(( totalEmpHr + empHr ))
 
-	salary=$(( empHr * empRatePerHr ))
-	totSalary=$(( salary + totSalary ))
 done
+
+totSalary=$(( totalEmpHr * empRatePerHr ))
 
 echo "EMPLOYEE DATA ::"
 echo "FullTimePresent days : $fullTimePre  PartTimePresent days : $partTimePre  Absent days : $absent "
+echo "Total Working Days : $totalDays  Total Working Hours : $totalEmpHr "
 echo "Total Salary for 20 days is $totSalary"
