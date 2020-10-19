@@ -81,5 +81,22 @@ echo "Total Working Days : $totalDays  Total Working Hours : $totalEmpHr "
 echo "Total Salary for 20 days is $totSalary"
 echo "Array for Salary : ${sal[@]}"
 echo "Array for Total Salary : ${totalSal[@]}"
-echo "Day-wise Salary is : ${!dictSal[@]} ${dictSal[@]}"
-echo "Day-wise Total Salary is : ${!dictTotalSal[@]} ${dictTotalSal[@]}"
+
+echo ""
+echo "Day-wise Salary"
+
+for i in "${!dictSal[@]}"
+do
+	echo "$i" "${dictSal[$i]}"
+done
+
+echo ""
+echo "Day-Wise Total Salary"
+
+for i in "${!dictTotalSal[@]}"
+do
+	echo "$i" "${dictTotalSal[$i]}"
+done
+
+#echo "Day-wise Salary is : ${!dictSal[@]} ${dictSal[@]}"
+#echo "Day-wise Total Salary is : ${!dictTotalSal[@]} ${dictTotalSal[@]}"
